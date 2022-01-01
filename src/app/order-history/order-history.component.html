@@ -1,0 +1,113 @@
+<div class="container-lg-fluid">
+  <div class="display-6">Order History</div>
+  <div class="row">
+    <div class="col-lg-8 p-0 p-sm-3">
+      <div class="accordion" id="accordionExample">
+        <ng-container *ngFor="let order of orders; let i = index">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#yotestyo2' + i"
+                aria-expanded="false"
+                aria-controls="yotestyo2+i"
+              >
+                Order No. {{ i + 1 }}
+                <span class="small text-secondary">
+                  &nbsp; ({{ order.orderDate | date }})
+                </span>
+              </button>
+            </h2>
+            <div
+              [id]="'yotestyo2' + i"
+              class="accordion-collapse collapse"
+              aria-labelledby="headingTwo"
+              data-bs-parent="#accordionExample"
+            >
+              <div class="accordion-body">
+                <div
+                  *ngFor="let item of order.orderedItems; first as isFirst"
+                  class="card d-flex"
+                >
+                  <div *ngIf="isFirst" class="p-2 row g-0 align-items-center">
+                    <div class="small fw-bolder">
+                      {{ order.orderDate | date: "medium" }}
+                    </div>
+                    <div class="small fw-bolder">
+                      Via {{ order.orderPaymentMethod | paymentMethod }}
+                    </div>
+                    <div class="small fw-bolder">
+                      {{ +order.orderTotal | currency }}
+                    </div>
+                    <div class="col-2 col-sm-2 text-center">
+                      <h5 class="card-title small m-0 text-secondary">Image</h5>
+                    </div>
+                    <div class="col-4 col-sm-4">
+                      <div class="card-body">
+                        <h5 class="card-title small m-0 text-secondary">
+                          Product
+                        </h5>
+                      </div>
+                    </div>
+
+                    <div class="col-3 col-sm-3">
+                      <p class="card-text text-center">
+                        <small class="text-secondary"> Quantity</small>
+                      </p>
+                    </div>
+
+                    <div class="col-3 col-sm-3">
+                      <p class="card-text text-center">
+                        <small class="text-secondary"> Price</small>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="row g-0 align-items-center">
+                    <div class="col-2 col-sm-2 text-center">
+                      <img
+                        [src]="item.productImage"
+                        class="img-fluid w-25"
+                        alt="card-horizontal-image"
+                      />
+                    </div>
+                    <div class="col-4 col-sm-4">
+                      <div class="card-body">
+                        <h5 class="card-title text-secondary small m-0">
+                          {{ item.productName }}
+                        </h5>
+                      </div>
+                    </div>
+
+                    <div class="col-3 col-sm-3">
+                      <p class="card-text text-center">
+                        <small class="text-secondary mx-2">{{
+                          item.productCartQuantity
+                        }}</small>
+                      </p>
+                    </div>
+
+                    <div class="col-3 col-sm-3">
+                      <p class="card-text text-center">
+                        <small class="text-secondary">
+                          {{
+                            item.productPrice * item.productCartQuantity
+                              | currency
+                          }}</small
+                        >
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr />

@@ -1,0 +1,13 @@
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+input.ng-valid.ng-touched {
+  border: 1px solid green;
+}
+
+.roundedcorner {
+  border-radius: 10px;
+  background-color: #17a2b8;
+  box-shadow: 0 1px 5px rgb(0, 0, 0);
+}

@@ -1,0 +1,384 @@
+<div *ngIf="updatedCurrentProfile?.accessType === 'admin'" class="display-6">
+  Categories
+</div>
+<div *ngIf="updatedCurrentProfile?.accessType === 'admin'" class="container-lg">
+  <div
+    class="col-lg-12 d-flex mt-3 flex-wrap centerForSmallDevices"
+    style="max-width: 960px"
+  >
+    <ng-container *ngIf="updatedCurrentProfile?.accessType === 'admin'">
+      <div
+        *ngFor="let category of categories; last as isLast"
+        class="card col-lg-2 m-3"
+        [routerLink]="['/categories', category.categoryId]"
+        [queryParams]="{
+          allowEdit: updatedCurrentProfile?.accessType === 'admin' ? '1' : '0'
+        }"
+        routerLinkActive="active"
+        style="cursor: pointer; width: 170px"
+      >
+        <div class="card-body">
+          <h5 class="card-title my-auto text-center">
+            {{ category.categoryName | titlecase }}
+          </h5>
+          <p class="card-text d-none">{{ category.categoryId }}</p>
+        </div>
+        <div *ngIf="allowEdit" class="row m-0 justify-content-center p-1">
+          <div
+            *ngIf="allowEdit"
+            class="btn btn-secondary col-lg-6 btnNoRadius"
+            onclick="event.stopPropagation();"
+            (click)="onEdit(category)"
+            [routerLink]="['/categories', 'edit', category.categoryId]"
+            [queryParams]="{
+              allowEdit:
+                updatedCurrentProfile?.accessType === 'admin' ? '1' : '0'
+            }"
+          >
+            <i class="bi bi-pencil-square"></i>
+          </div>
+          <div
+            *ngIf="allowEdit"
+            class="btn btn-danger col-lg-6 btnNoRadius"
+            onclick="event.stopPropagation();"
+            (click)="onDelete(category)"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteCategory"
+          >
+            <i class="bi bi-trash"></i>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="allowEdit" class="card col-lg-2 m-3" style="width: 170px">
+        <span
+          style="cursor: pointer"
+          class="text-center my-auto"
+          [routerLink]="['/categories', 'add']"
+          [queryParams]="{
+            allowEdit: updatedCurrentProfile?.accessType === 'admin' ? '1' : '0'
+          }"
+          (click)="onAdd()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="70"
+            height="70"
+            fill="currentColor"
+            class="bi bi-plus-circle text-secondary pt-2"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+            />
+            <path
+              d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+            />
+          </svg>
+          <div class="pt-2">Add Category</div>
+        </span>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<div
+  *ngIf="
+    updatedCurrentProfile?.accessType === 'non-admin' || !updatedCurrentProfile
+  "
+  class="display-6"
+>
+  Categories
+</div>
+<div
+  *ngIf="
+    updatedCurrentProfile?.accessType === 'non-admin' || !updatedCurrentProfile
+  "
+  class="container-lg my-4"
+>
+  <div class="col-lg-12 d-flex flex-wrap mx-auto centerForSmallDevices">
+    <ng-container>
+      <div
+        *ngFor="let category of categories; last as isLast"
+        class="card col-10 m-3 gradient"
+        [routerLink]="['/categories', category.categoryId]"
+        [queryParams]="{
+          allowEdit: updatedCurrentProfile?.accessType === 'admin' ? '1' : '0'
+        }"
+        routerLinkActive="active"
+        style="cursor: pointer"
+      >
+        <div class="card-body">
+          <h5 class="card-title my-auto text-center">
+            {{ category.categoryName | titlecase }}
+          </h5>
+          <p class="card-text d-none">{{ category.categoryId }}</p>
+        </div>
+        <div *ngIf="allowEdit" class="row m-0 justify-content-center p-1">
+          <div
+            *ngIf="allowEdit"
+            class="btn btn-secondary col-lg-6 btnNoRadius"
+            onclick="event.stopPropagation();"
+            (click)="onEdit(category)"
+            [routerLink]="['/categories', 'edit', category.categoryId]"
+            [queryParams]="{
+              allowEdit:
+                updatedCurrentProfile?.accessType === 'admin' ? '1' : '0'
+            }"
+          >
+            <i class="bi bi-pencil-square"></i>
+          </div>
+          <div
+            *ngIf="allowEdit"
+            class="btn btn-danger col-lg-6 btnNoRadius"
+            onclick="event.stopPropagation();"
+            (click)="onDelete(category)"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteCategory"
+          >
+            <i class="bi bi-trash"></i>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="allowEdit" class="card col-lg-2 m-3" style="width: 170px">
+        <span
+          style="cursor: pointer"
+          class="text-center my-auto"
+          [routerLink]="['/categories', 'add']"
+          [queryParams]="{
+            allowEdit: updatedCurrentProfile?.accessType === 'admin' ? '1' : '0'
+          }"
+          (click)="onAdd()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="70"
+            height="70"
+            fill="currentColor"
+            class="bi bi-plus-circle text-secondary pt-2"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+            />
+            <path
+              d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+            />
+          </svg>
+          <div class="pt-2">Add Category</div>
+        </span>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<!--ADD CATEGORY MODAL-->
+
+<!-- Button trigger modal -->
+
+<!--EDIT CATEGORY MODAL-->
+
+<!-- Button trigger modal DON'T DELETE THIS-->
+<button
+  type="button"
+  class="btn btn-primary"
+  data-bs-toggle="modal"
+  data-bs-target="#editCategory"
+  id="editModalTrigger"
+  style="display: none"
+>
+  Hidden Trigger for Edit Modal
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="editCategory"
+  tabindex="-1"
+  aria-labelledby="editCategoryLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-body"><router-outlet></router-outlet></div>
+    </div>
+  </div>
+</div>
+
+<!--DELETE MODAL-->
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="deleteCategory"
+  tabindex="-1"
+  aria-labelledby="deletedModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content pb-3 px-3">
+      <div class="modal-body">
+        Delete the
+        {{ deletedCategory?.categoryName | titlecase }} category?
+      </div>
+
+      <div class="row px-3">
+        <button
+          type="button"
+          class="btn btn-danger mb-1"
+          data-bs-dismiss="modal"
+          (click)="onModalDelete()"
+        >
+          Delete
+        </button>
+        <button
+          id="modalDismiss"
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Edit Category Toast-->
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 999999">
+  <div
+    #myToast1
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    class="toast fade"
+    data-bs-autohide="true"
+  >
+    <div class="toast-header">
+      <img
+        [src]="updatedCurrentProfile?.imagePath"
+        class="rounded me-2"
+        alt="..."
+        style="max-width: 30px; max-height: fit-content"
+      />
+      <strong class="me-auto">Edited!</strong>
+      <small>A few seconds ago</small>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="toast"
+        aria-
+        label="Close"
+      ></button>
+    </div>
+    <div class="toast-body">
+      Hello, {{ updatedCurrentProfile?.firstName }}! Your category has been
+      edited.
+    </div>
+  </div>
+</div>
+
+<!--Delete Category Toast-->
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 999999">
+  <div
+    #myToast2
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    class="toast fade"
+    data-bs-autohide="true"
+  >
+    <div class="toast-header">
+      <img
+        [src]="updatedCurrentProfile?.imagePath"
+        class="rounded me-2"
+        alt="..."
+        style="max-width: 30px; max-height: fit-content"
+      />
+      <strong class="me-auto">Deleted!</strong>
+      <small>A few seconds ago</small>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="toast"
+        aria-
+        label="Close"
+      ></button>
+    </div>
+    <div class="toast-body">
+      Hello, {{ updatedCurrentProfile?.firstName }}! Your category has been
+      deleted.
+    </div>
+  </div>
+</div>
+
+<!--Add Category Toast-->
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 999999">
+  <div
+    #myToast3
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    class="toast fade"
+    data-bs-autohide="true"
+  >
+    <div class="toast-header">
+      <img
+        [src]="updatedCurrentProfile?.imagePath"
+        class="rounded me-2"
+        alt="..."
+        style="max-width: 30px; max-height: fit-content"
+      />
+      <strong class="me-auto">Added!</strong>
+      <small>A few seconds ago</small>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="toast"
+        aria-
+        label="Close"
+      ></button>
+    </div>
+    <div class="toast-body">
+      Hello, {{ updatedCurrentProfile?.firstName }}! Your category has been
+      added.
+    </div>
+  </div>
+</div>
+
+<!--Updated Profile Toast-->
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 999999">
+  <div
+    #myToast4
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    class="toast fade"
+    data-bs-autohide="true"
+  >
+    <div class="toast-header">
+      <img
+        [src]="updatedCurrentProfile?.imagePath"
+        class="rounded me-2"
+        alt="..."
+        style="max-width: 30px; max-height: fit-content"
+      />
+      <strong class="me-auto">Profile updated!</strong>
+
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="toast"
+        aria-
+        label="Close"
+      ></button>
+    </div>
+    <div class="toast-body">
+      Hello, {{ updatedCurrentProfile?.firstName }}! Your profile has been
+      updated.
+    </div>
+  </div>
+</div>

@@ -1,0 +1,310 @@
+<div class="display-6">Checkout</div>
+<div class="container-lg mb-3">
+  <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+    <div class="py-5 text-center">
+      <h2>Total: {{ total | currency }}</h2>
+    </div>
+    <div class="row">
+      <div class="col-md-8 order-md-1 order-xs-1 px-lg-5">
+        <h4 class="mb-3">Billing address</h4>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="firstName">First name</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"
+                  ><i class="bi bi-file-person"></i
+                ></span>
+              </div>
+              <input
+                type="text"
+                class="form-control"
+                id="firstname"
+                placeholder="First name"
+                formControlName="firstName"
+              />
+            </div>
+            <span
+              *ngIf="
+                !paymentForm?.get('firstName')?.valid &&
+                paymentForm?.get('firstName')?.touched
+              "
+              class="help-block"
+              >Please enter a valid first name</span
+            >
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="lastName">Last name</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"
+                  ><i class="bi bi-file-person"></i
+                ></span>
+              </div>
+              <input
+                type="text"
+                class="form-control"
+                id="lastname"
+                placeholder="Last name"
+                formControlName="lastName"
+              />
+            </div>
+            <span
+              *ngIf="
+                !paymentForm?.get('lastName')?.valid &&
+                paymentForm?.get('lastName')?.touched
+              "
+              class="help-block"
+              >Please enter a valid last name</span
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="username">Email</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"
+                ><i class="bi bi-envelope"></i
+              ></span>
+            </div>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="Email"
+              formControlName="email"
+            />
+          </div>
+          <span
+            *ngIf="
+              !paymentForm?.get('email')?.valid &&
+              paymentForm?.get('email')?.touched
+            "
+            class="help-block"
+            >Please enter a valid email</span
+          >
+        </div>
+        <div class="mb-3">
+          <label for="username">Address</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"
+                ><i class="bi bi-house-door"></i
+              ></span>
+            </div>
+            <input
+              type="address"
+              class="form-control"
+              id="address"
+              placeholder="Address"
+              formControlName="address"
+            />
+          </div>
+          <span
+            *ngIf="
+              !paymentForm?.get('address')?.valid &&
+              paymentForm?.get('address')?.touched
+            "
+            class="help-block"
+            >Please enter a valid address</span
+          >
+        </div>
+
+        <div class="row"></div>
+        <hr class="mb-4" />
+
+        <div class="custom-control custom-checkbox">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            id="save-info"
+            formControlName="savePaymentInfo"
+            (click)="clickedCheckbox()"
+          />
+          <label class="custom-control-label mb-5" for="save-info">
+            &nbsp; Use my profile information</label
+          >
+        </div>
+      </div>
+      <div
+        class="col-md-4 col-lg-3 order-md-4 order-xs-4 mb-4 p-4 roundedcorner"
+      >
+        <h4 class="mb-3">Payment</h4>
+        <div class="d-block my-3">
+          <div class="custom-control custom-radio">
+            <input
+              id="credit"
+              name="paymentMethod"
+              type="radio"
+              class="custom-control-input"
+              value="creditCard"
+              checked=""
+              formControlName="paymentMethod"
+            />
+            <label class="custom-control-label" for="credit">Credit card</label>
+          </div>
+
+          <div class="custom-control custom-radio">
+            <input
+              id="debit"
+              name="paymentMethod"
+              type="radio"
+              value="debitCard"
+              class="custom-control-input"
+              formControlName="paymentMethod"
+            />
+            <label class="custom-control-label" for="debit">Debit card</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input
+              id="paypal"
+              name="paymentMethod"
+              type="radio"
+              value="paypal"
+              class="custom-control-input"
+              formControlName="paymentMethod"
+            />
+            <label class="custom-control-label" for="paypal">PayPal</label>
+          </div>
+          <span
+            *ngIf="
+              !paymentForm?.get('paymentMethod')?.valid &&
+              paymentForm?.get('paymentMethod')?.touched
+            "
+            class="help-block"
+            >Please choose a payment method</span
+          >
+        </div>
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <label for="amount">Amount</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"
+                  ><i class="bi bi-currency-dollar"></i
+                ></span>
+              </div>
+              <input
+                type="currency"
+                class="form-control"
+                id="amount"
+                placeholder="Amount  "
+                formControlName="amount"
+                readonly
+              />
+            </div>
+            <span
+              *ngIf="
+                !paymentForm?.get('amount')?.valid &&
+                paymentForm?.get('amount')?.touched
+              "
+              class="help-block"
+              >Please enter an amount</span
+            >
+          </div>
+        </div>
+        <div class="row">
+          <hr class="mb-4" />
+          <button
+            class="btn btn-dark btn-lg btn-block"
+            type="submit"
+            [disabled]="!paymentForm.valid"
+          >
+            Make payment
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!--CHECKOUT SUMMARY MODAL-->
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="checkoutSummaryModal"
+  tabindex="-1"
+  aria-labelledby="checkoutSummaryLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="checkoutSummaryLabel">
+          <i class="bi-cart-check-fill fs-1 text-success"></i>
+          Your order has been processed.
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="lead">Summary:</div>
+        <br />
+        <div>
+          <p class="lh-1">
+            <strong> Name:</strong> {{ paymentDetails.firstName }}
+            {{ paymentDetails.lastName }}
+          </p>
+          <p class="lh-1">
+            <strong>Email: </strong> {{ paymentDetails.email }}
+          </p>
+          <p class="lh-1">
+            <strong>Address:</strong> {{ paymentDetails.address }}
+          </p>
+          <p class="lh-1">
+            <strong> Payment method: </strong
+            >{{ paymentDetails.paymentMethod | paymentMethod }}
+          </p>
+          <p class="lh-1">
+            <strong> Amount paid: </strong
+            >{{ paymentDetails.amount | currency }}
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button
+          id="modalDismiss"
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          Got it
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Can't Checkout Modal -->
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-body mx-auto">Please add items to your cart first.</div>
+      <div class="modal-footer">
+        <button
+          id="modalDismiss"
+          type="button"
+          class="btn btn-primary mx-auto"
+          data-bs-dismiss="modal"
+        >
+          Got it.
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

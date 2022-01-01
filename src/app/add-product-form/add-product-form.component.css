@@ -1,0 +1,24 @@
+.help-block {
+  color: red;
+}
+
+.form-floating.fix {
+    position: relative;
+  }
+  
+  .form-floating.fix:before {
+    content: "";
+    position: absolute;
+    top: 1px; /* border-width (default by BS) */
+    left: 1px; /* border-width (default by BS) */
+    width: calc(100% - 14px); /* to show scrollbar */
+    height: 28px;
+    border-radius: 4px; /* (default by BS) */
+    background-color: #ffffff;
+  }
+  
+  .form-floating.fix textarea.form-control {
+    padding-top: 32px; /* height of pseudo element */
+    min-height: 80px; /* not relevant */
+  }
+  

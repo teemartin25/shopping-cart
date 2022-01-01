@@ -1,0 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Happy+Monkey&display=swap");
+.customFont {
+  font-family: "Happy Monkey", cursive;
+  font-size: 25px;
+  padding: 15px 0px 10px 20px;
+}

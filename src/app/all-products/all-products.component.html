@@ -1,0 +1,414 @@
+<div class="display-6">All Products</div>
+
+<div class="container-lg">
+  <div class="row mt-5 justify-content-center" style="max-width: 984px">
+    <div class="input-group input-group-lg col-lg-4" style="max-width: 500px">
+      <span class="input-group-text" id="input-group-left-example"
+        ><i class="bi bi-search"></i
+      ></span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Start typing to filter..."
+        aria-label="Username"
+        aria-describedby="input-group-left"
+        [(ngModel)]="filteredStatus"
+        (ngModelChange)="modelChange($event)"
+      />
+    </div>
+  </div>
+
+  <div class="row p-3 px-5 justify-content-center" style="max-width: 984px">
+    <div class="form-check col-lg-3">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="radioDefault"
+        id="formRadioDefault1"
+        checked=""
+        (click)="sortAlphabeticalAtoZ()"
+      />
+      <label class="form-check-label" for="formRadioDefault1"
+        >Sort Alphabetically</label
+      >
+    </div>
+    <div class="form-check col-lg-3">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="radioDefault"
+        id="formRadioChecked"
+        (click)="sortPriceLowToHigh()"
+      />
+      <label class="form-check-label" for="formRadioChecked">
+        Sort Price: Low to High</label
+      >
+    </div>
+    <div class="form-check col-lg-3">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="radioDefault"
+        id="formRadioDefault"
+        (click)="sortPriceHighToLow()"
+      />
+      <label class="form-check-label" for="formRadioDefault"
+        >Sort Price: High to Low</label
+      >
+    </div>
+  </div>
+  <div class="row justify-content-center" style="max-width: 984px">
+    <ng-container
+      *ngFor="
+        let product of products
+          | filter: filteredStatus:'productName'
+          | paginate: { itemsPerPage: 8, currentPage: p }
+      "
+    >
+      <div
+        class="card m-3 p-1 overflow-hidden roundedcorner"
+        style="width: 200px"
+      >
+        <img
+          class="card-img-top mx-auto"
+          [src]="product.productImage"
+          alt="Card image cap"
+          style="height: 110px; object-fit: scale-down"
+        />
+        <div class="card-body">
+          <h6 class="card-title text-truncate">{{ product.productName }}</h6>
+          <p class="card-text small text-secondary">
+            {{ product.productDescription }}
+          </p>
+        </div>
+
+        <li class="list-group-item small">
+          Price: {{ product.productPrice | currency }}
+        </li>
+        <li class="list-group-item small">
+          <a class="btn btn-success btn-sm" (click)="addToCart(product)"
+            >Add to cart</a
+          >
+        </li>
+
+        <div class="row m-0">
+          <div
+            *ngIf="allowEdit"
+            class="btn btn-secondary col-lg-6"
+            [routerLink]="[
+              '/all-products',
+              'product',
+              'edit',
+              product.productId
+            ]"
+            [queryParams]="{ allowEdit: '1' }"
+            (click)="onEdit()"
+          >
+            Edit
+          </div>
+          <div
+            *ngIf="allowEdit"
+            class="btn btn-danger col-lg-6"
+            (click)="onDeleteProduct(product)"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteProductModal-allProductsPage"
+          >
+            Delete
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container>
+      <div
+        *ngIf="allowEdit"
+        class="card m-3 roundedcorner"
+        style="width: 200px; min-height: 250px"
+      >
+        <span
+          class="text-center my-auto"
+          style="cursor: pointer"
+          [routerLink]="['/all-products', 'add']"
+          [queryParams]="{ allowEdit: '1' }"
+          (click)="onEdit()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="100"
+            height="100"
+            fill="currentColor"
+            class="bi bi-plus-circle text-secondary"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+            />
+            <path
+              d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+            />
+          </svg>
+          <div class="pt-2">Add Product</div>
+        </span>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="" style="font-size: 20px; text-align: right; max-width: 984px">
+    <pagination-controls
+      (pageChange)="p = $event"
+      [maxSize]="0"
+    ></pagination-controls>
+  </div>
+</div>
+<hr />
+
+<!--ADD PRODUCT MODAL-->
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="addProductModal-AllProducts-Page"
+  tabindex="-1"
+  aria-labelledby="addProductLabel-AllProductsPage"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addProductLabel-AllProductsPage">
+          Add Product
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <app-add-product-form></app-add-product-form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--EDIT PRODUCT MODAL-->
+
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-primary"
+  data-bs-toggle="modal"
+  data-bs-target="#editProductModal-AllProductsPage"
+  id="editProductTrigger-allProductsPage"
+  style="display: none"
+>
+  Edit Modal Trigger
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="editProductModal-AllProductsPage"
+  tabindex="-1"
+  aria-labelledby="editProductLabel-AllProductsPage"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-body"><router-outlet></router-outlet></div>
+    </div>
+  </div>
+</div>
+
+<!--DELETE PRODUCT MODAL-->
+
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-primary"
+  data-bs-toggle="modal"
+  data-bs-target="#deleteProductModal-allProductsPage"
+  style="display: none"
+>
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="deleteProductModal-allProductsPage"
+  tabindex="-1"
+  aria-labelledby="deleteProductLabel-allProductsPage"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content pb-3">
+      <div class="modal-body text-center">
+        Delete product {{ deletedProduct?.productName }}?
+      </div>
+      <div class="row text-center justify-content-center">
+        <button
+          type="button"
+          class="btn btn-danger mb-1"
+          data-bs-dismiss="modal"
+          (click)="onModalDelete()"
+          style="max-width: 300px"
+        >
+          Delete
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          style="max-width: 300px"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Edit Product Toast-->
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 999999">
+  <div
+    #myToast1
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    class="toast fade"
+    data-bs-autohide="true"
+  >
+    <div class="toast-header">
+      <img
+        [src]="editedProduct?.productImage"
+        class="rounded me-2"
+        alt="..."
+        style="max-width: 30px; max-height: fit-content"
+      />
+      <strong class="me-auto">{{ editedProduct?.productName }}</strong>
+      <small>A few seconds ago</small>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="toast"
+        aria-
+        label="Close"
+      ></button>
+    </div>
+    <div class="toast-body">
+      Hello, {{ updatedCurrentProfile?.firstName }}! Your product has been
+      edited.
+    </div>
+  </div>
+</div>
+
+<!--Delete Product Toast-->
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 999999">
+  <div
+    #myToast2
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    class="toast fade"
+    data-bs-autohide="true"
+  >
+    <div class="toast-header">
+      <img
+        [src]="deletedProduct?.productImage"
+        class="rounded me-2"
+        alt="..."
+        style="max-width: 30px; max-height: fit-content"
+      />
+      <strong class="me-auto">{{ deletedProduct?.productName }}</strong>
+      <small>A few seconds ago</small>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="toast"
+        aria-
+        label="Close"
+      ></button>
+    </div>
+    <div class="toast-body">
+      Hello, {{ updatedCurrentProfile?.firstName }}! Your product has been
+      deleted.
+    </div>
+  </div>
+</div>
+
+<!--Add Product Toast-->
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 999999">
+  <div
+    #myToast3
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    class="toast fade"
+    data-bs-autohide="true"
+  >
+    <div class="toast-header">
+      <img
+        [src]="addedProduct?.productImage"
+        class="rounded me-2"
+        alt="..."
+        style="max-width: 30px; max-height: fit-content"
+      />
+      <strong class="me-auto">{{ addedProduct?.productName }}</strong>
+      <small>A few seconds ago</small>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="toast"
+        aria-
+        label="Close"
+      ></button>
+    </div>
+    <div class="toast-body">
+      Hello, {{ updatedCurrentProfile?.firstName }}! Your product has been
+      added.
+    </div>
+  </div>
+</div>
+
+<!--Add To Cart Toast-->
+
+<div aria-live="polite" aria-atomic="true" class="position-relative">
+  <div class="toast-container">
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 999999">
+      <div
+        #myToast4
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+        class="toast fade"
+        data-bs-autohide="true"
+      >
+        <div class="toast-header">
+          <img
+            [src]="addedToCartProduct?.productImage"
+            class="rounded me-2"
+            alt="..."
+            style="max-width: 30px; max-height: fit-content"
+          />
+          <strong class="me-auto">{{ addedToCartProduct?.productName }}</strong>
+
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="toast"
+            aria-
+            label="Close"
+          ></button>
+        </div>
+        <div class="toast-body">
+          Hello, {{ updatedCurrentProfile?.firstName }}! Item has been added to
+          cart.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,134 @@
+<div class="lead mb-2">Edit Product</div>
+<form [formGroup]="addProductForm" (ngSubmit)="onSubmit()">
+  <div class="form-floating">
+    <input
+      type="text"
+      class="form-control"
+      id="floatingProductName"
+      placeholder="product name here"
+      formControlName="productName"
+    />
+    <label for="floatingProductName">Product Name:</label>
+    <span
+      *ngIf="
+        !addProductForm.get('productName').valid &&
+        addProductForm.get('productName').touched
+      "
+      class="help-block"
+      >This field is required</span
+    >
+  </div>
+  <div class="form-floating">
+    <input
+      type="text"
+      class="form-control"
+      id="floatingProductId"
+      placeholder="product id here"
+      formControlName="productId"
+      readonly
+    />
+    <label for="floatingProductId">Product ID:</label>
+    <span
+      *ngIf="
+        !addProductForm.get('productId').valid &&
+        addProductForm.get('productId').touched
+      "
+      class="help-block"
+      >This field is required</span
+    >
+  </div>
+  <div class="form-floating">
+    <input
+      type="text"
+      class="form-control"
+      id="floatingProductImage"
+      placeholder="product image here"
+      formControlName="productImage"
+    />
+    <label for="floatingProductImage">Product Image:</label>
+    <span
+      *ngIf="
+        !addProductForm.get('productImage').valid &&
+        addProductForm.get('productImage').touched
+      "
+      class="help-block"
+      >This field is required</span
+    >
+  </div>
+  <div class="form-floating">
+    <input
+      name="price"
+      type="number"
+      class="form-control"
+      id="floatingProductPrice"
+      placeholder="product price here"
+      [(ngModel)]="displayPriceLabel"
+      [ngModelOptions]="{ standalone: true }"
+      (blur)="updateProductPriceControl()"
+    />
+    <label for="floatingProductPrice"
+      >Product Price:
+      <span class="text-success">
+        {{ displayPriceLabel | currency }}
+      </span></label
+    >
+    <span
+      *ngIf="!addProductForm.get('productPrice').valid && priceControlIsTouched"
+      class="help-block"
+      >This field is required</span
+    >
+  </div>
+  <div class="form-floating fix">
+    <textarea
+      class="form-control"
+      placeholder="Product description here"
+      id="floatingProductDescription"
+      style="height: 100px"
+      formControlName="productDescription"
+    ></textarea>
+    <label for="floatingProductDescription">Product Description</label>
+    <span
+      *ngIf="
+        !addProductForm.get('productDescription').valid &&
+        addProductForm.get('productDescription').touched
+      "
+      class="help-block"
+      >This field is required</span
+    >
+  </div>
+  <div class="form-floating">
+    <select
+      class="form-select"
+      id="floatingSelect"
+      aria-label="Floating label select example"
+      formControlName="productCategory"
+      readonly
+    >
+      <option *ngFor="let category of categories" [value]="category.categoryId">
+        {{ category.categoryName | titlecase }}
+      </option>
+    </select>
+    <label for="floatingSelect">Product Category</label>
+    <span
+      *ngIf="
+        !addProductForm.get('productCategory').valid &&
+        addProductForm.get('productCategory').touched
+      "
+      class="help-block"
+      >This field is required</span
+    >
+  </div>
+  <div class="row px-3 mt-3">
+    <button
+      [disabled]="!addProductForm.valid"
+      class="btn btn-success mb-1"
+      type="submit"
+      data-bs-dismiss="modal"
+    >
+      Edit Product
+    </button>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+      Cancel
+    </button>
+  </div>
+</form>

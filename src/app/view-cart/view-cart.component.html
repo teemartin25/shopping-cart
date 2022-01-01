@@ -1,0 +1,143 @@
+<div class="display-6">View Cart</div>
+<div class="container-lg-fluid mt-3 mb-5">
+  <div
+    *ngIf="cart.length < 1"
+    class="lead mt-5 d-flex col-lg-8 mx-auto"
+    style="min-height: 350px; border: 5px dashed rgb(73, 72, 72)"
+  >
+    <div class="align-middle my-auto mx-auto lead fw-bolder text-dark">
+      Cart is empty
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-7 p-0 p-sm-3 mb-3">
+      <div
+        *ngFor="let product of cart; first as isFirst"
+        class="card d-flex roundedcorner"
+      >
+        <div *ngIf="isFirst" class="row g-0 align-items-center">
+          <div class="col-2 col-sm-2 text-center">
+            <h5 class="card-title small m-0">Image</h5>
+          </div>
+          <div class="col-5 col-sm-5">
+            <div class="card-body">
+              <h5 class="card-title small m-0">Product</h5>
+            </div>
+          </div>
+
+          <div class="col-3 col-sm-3">
+            <p class="card-text text-center">
+              <small class="text-muted"> Quantity</small>
+            </p>
+          </div>
+
+          <div class="col-2 col-sm-2">
+            <p class="card-text text-center">
+              <small class="text-muted"> Price</small>
+            </p>
+          </div>
+        </div>
+
+        <div class="row g-0 align-items-center">
+          <div class="col-2 col-sm-2 text-center">
+            <img
+              [src]="product.productImage"
+              class="img-fluid w-25"
+              alt="card-horizontal-image"
+            />
+          </div>
+          <div class="col-5 col-sm-5">
+            <div class="card-body">
+              <h5 class="card-title small m-0">
+                {{ product.productName }}
+                <i
+                  class="bi-trash text-secondary"
+                  style="font-size: 13px; cursor: pointer"
+                  (click)="deleteItemFromCart(product)"
+                ></i>
+              </h5>
+            </div>
+          </div>
+
+          <div class="col-3 col-sm-3">
+            <p class="card-text text-center">
+              <i
+                class="bi-dash-circle-fill text-danger"
+                style="font-size: 13px; cursor: pointer"
+                (click)="subtractItemQuantity(product)"
+              ></i>
+
+              <small class="text-muted mx-2">{{
+                product.productCartQuantity
+              }}</small
+              ><i
+                class="bi-plus-circle-fill text-success"
+                style="font-size: 13px; cursor: pointer"
+                (click)="addItemQuantity(product)"
+              ></i>
+            </p>
+          </div>
+
+          <div class="col-2 col-sm-2">
+            <p class="card-text text-center">
+              <small class="text-muted">{{
+                product.productPrice * product.productCartQuantity | currency
+              }}</small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="cart.length > 0" class="col-lg-4 display-6 text-center p-3">
+      <div
+        class="bg-warning roundedcorner p-3 mx-auto"
+        style="max-width: 400px"
+      >
+        Total {{ total | currency }}
+
+        <div *ngIf="cart.length > 0">
+          <span
+            class="btn btn-dark text-center mt-3 mb-1"
+            [routerLink]="['/checkout']"
+            >Proceed To Checkout</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Remove Item Cart Toast-->
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 999999">
+  <div
+    #myToast1
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    class="toast fade"
+    data-bs-autohide="true"
+  >
+    <div class="toast-header">
+      <img
+        [src]="removedItemFromCart?.productImage"
+        class="rounded me-2"
+        alt="..."
+        style="max-width: 30px; max-height: fit-content"
+      />
+      <strong class="me-auto">{{ removedItemFromCart?.productName }}</strong>
+
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="toast"
+        aria-
+        label="Close"
+      ></button>
+    </div>
+    <div class="toast-body">
+      Hello, {{ updatedCurrentProfile?.firstName }}! Item has been removed from
+      the cart.
+    </div>
+  </div>
+</div>

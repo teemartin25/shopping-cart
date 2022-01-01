@@ -1,0 +1,38 @@
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-primary"
+  data-bs-toggle="modal"
+  data-bs-target="#pleaseLoginModal"
+  style="display: none"
+>
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="pleaseLoginModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        Please login first in order to checkout.
+        <br />
+        <button
+          type="button"
+          class="btn btn-secondary text-center mt-3"
+          data-bs-dismiss="modal"
+          (click)="onGotIt()"
+        >
+          Got it.
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

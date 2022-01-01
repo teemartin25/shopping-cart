@@ -1,0 +1,199 @@
+<!--EDIT PROFILE MODAL-->
+
+<!-- Button trigger modal -->
+<button
+  style="display: none"
+  type="button"
+  class="btn btn-primary"
+  data-bs-toggle="modal"
+  data-bs-target="#editProfileModal"
+>
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="editProfileModal"
+  tabindex="-1"
+  aria-labelledby="editProfileLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProfileLabel">Edit Profile Page</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="onModalClose()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
+          <div class="text-center"></div>
+          <div class="row">
+            <div class="col-md-12 order-md-1 order-xs-1 px-lg-5">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="firstName">First name</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"
+                        ><i class="bi bi-file-person"></i
+                      ></span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="firstname"
+                      placeholder="First name"
+                      formControlName="firstName"
+                    />
+                  </div>
+                  <span
+                    *ngIf="
+                      !editProfileForm?.get('firstName')?.valid &&
+                      editProfileForm?.get('firstName')?.touched
+                    "
+                    class="help-block"
+                    >Please enter a valid first name</span
+                  >
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="lastName">Last name</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"
+                        ><i class="bi bi-file-person"></i
+                      ></span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="lastname"
+                      placeholder="Last name"
+                      formControlName="lastName"
+                    />
+                  </div>
+                  <span
+                    *ngIf="
+                      !editProfileForm?.get('lastName')?.valid &&
+                      editProfileForm?.get('lastName')?.touched
+                    "
+                    class="help-block"
+                    >Please enter a valid last name</span
+                  >
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="email">Email</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><i class="bi bi-envelope"></i
+                    ></span>
+                  </div>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="Email"
+                    formControlName="email"
+                    readonly
+                  />
+                </div>
+                <span
+                  *ngIf="
+                    !editProfileForm?.get('email')?.valid &&
+                    editProfileForm?.get('email')?.touched
+                  "
+                  class="help-block"
+                  >Please enter a valid email</span
+                >
+              </div>
+              <div class="mb-3">
+                <label for="address">Address</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><i class="bi bi-house-door"></i
+                    ></span>
+                  </div>
+                  <input
+                    type="address"
+                    class="form-control"
+                    id="address"
+                    placeholder="Address"
+                    formControlName="address"
+                  />
+                </div>
+                <span
+                  *ngIf="
+                    !editProfileForm?.get('address')?.valid &&
+                    editProfileForm?.get('address')?.touched
+                  "
+                  class="help-block"
+                  >Please enter a valid address</span
+                >
+              </div>
+              <div class="mb-3">
+                <label for="username">Image URL</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><i class="bi bi-camera"></i
+                    ></span>
+                  </div>
+                  <input
+                    type="imagePath"
+                    class="form-control"
+                    id="imagePath"
+                    placeholder="Image URL"
+                    formControlName="imagePath"
+                  />
+                </div>
+                <span
+                  *ngIf="
+                    !editProfileForm?.get('imagePath')?.valid &&
+                    editProfileForm?.get('imagePath')?.touched
+                  "
+                  class="help-block"
+                  >Please enter a valid image path</span
+                >
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div class="row px-5 justify-content-center">
+          <button
+            type="button"
+            class="btn btn-primary mb-1"
+            data-bs-dismiss="modal"
+            [disabled]="!editProfileForm.valid"
+            (click)="onSubmit()"
+            style="max-width: 400px"
+          >
+            Edit Profile
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            (click)="onModalClose()"
+            style="max-width: 400px"
+            id="modalDismiss"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

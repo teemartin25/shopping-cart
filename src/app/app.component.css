@@ -1,0 +1,55 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css");
+
+.rounded-pill {
+  font-size: 11px;
+}
+
+.safariOutline-Fix:focus {
+  outline: none;
+}
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 40px; /* Footer height */
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  min-height: 72px; /* Footer height */
+}
+
+#content-body {
+  min-height: calc(100vh - 140px);
+  position: relative;
+}
+
+@media screen and (min-width: 577px) {
+  #content-body-stickynav {
+    min-height: calc(100vh - 140px);
+  }
+
+  .nav-item {
+    margin-bottom: 8px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .navitemj {
+    margin: 5px 0px;
+  }
+}
+
+.navitemj {
+  background-color: #5c6bc0;
+
+  color: white !important;
+}
+.border-dark {
+  border-top: 0px !important;
+}

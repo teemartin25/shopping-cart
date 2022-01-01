@@ -1,0 +1,27 @@
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+.card {
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 1px 10px rgb(0, 0, 0);
+}
+
+.btn.btnNoRadius {
+  border-radius: 0;
+}
+
+.gradient:hover {
+  background: #dc3545;
+
+  color: #f8f9fa;
+}
+
+@media screen and (max-width: 576px) {
+  .centerForSmallDevices {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+}

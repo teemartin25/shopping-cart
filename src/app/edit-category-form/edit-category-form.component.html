@@ -1,0 +1,81 @@
+<div class="lead">Edit Category</div>
+<br />
+<form [formGroup]="addCategoryForm" (ngSubmit)="onSubmit()">
+  <div class="col-lg-12 justify-content-center">
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="floatingInput"
+        placeholder="Shoes, Bags, Etc."
+        formControlName="categoryName"
+      />
+      <label for="floatingInput">Category Name:</label>
+      <span
+        *ngIf="
+          !addCategoryForm.get('categoryName')?.valid &&
+          addCategoryForm.get('categoryName')?.touched
+        "
+        class="help-block text-danger"
+      >
+        <span
+          *ngIf="
+            addCategoryForm
+              .get('categoryName')
+              .getError('categoryNameIsForbidden')
+          "
+          >This category name is already existing</span
+        >
+        <span *ngIf="addCategoryForm.get('categoryName').getError('required')"
+          >This field is required</span
+        >
+      </span>
+    </div>
+
+    <!-- This will hide the Category ID on the Edit Category Form
+
+
+    <div class="form-floating">
+      <input
+        type="text"
+        class="form-control"
+        id="floatingPassword"
+        placeholder="Shoes01, Bags04, Etc."
+        formControlName="categoryId"
+        readonly
+      />
+      <label for="floatingPassword">Category ID:</label>
+      <span
+        *ngIf="
+          !addCategoryForm.get('categoryId')?.valid &&
+          addCategoryForm.get('categoryId')?.touched
+        "
+        class="help-block text-danger"
+      >
+        <span
+          *ngIf="
+            addCategoryForm.get('categoryId').getError('categoryIdIsForbidden')
+          "
+          >This category ID is already existing</span
+        >
+        <span *ngIf="addCategoryForm.get('categoryId').getError('required')"
+          >This field is required</span
+        ></span
+      >
+    </div>
+    -->
+    <div class="row px-3">
+      <button
+        class="btn btn-success mb-1"
+        [disabled]="!addCategoryForm.valid"
+        data-bs-dismiss="modal"
+      >
+        Edit!
+      </button>
+
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="modalDismiss">
+        Cancel
+      </button>
+    </div>
+  </div>
+</form>

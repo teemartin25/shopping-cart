@@ -1,0 +1,299 @@
+<div id="page-container">
+  <app-header></app-header>
+  <div id="content-wrap">
+    <div
+      class="container-lg border border-2 border-dark"
+      id="content-body"
+      style="background-color: rgb(238, 238, 238)"
+    >
+      <div class="row">
+        <div class="col-sm-auto bg-light sticky-top" style="z-index: 1">
+          <div
+            class="
+              d-flex
+              flex-sm-column flex-row flex-nowrap
+              align-items-center
+            "
+            id="content-body-stickynav"
+          >
+            <ul
+              class="
+                nav nav-pills nav-flush
+                flex-sm-column flex-row flex-nowrap
+                mb-auto
+                mx-auto
+                text-center
+                justify-content-between
+                w-100
+                align-items-center
+              "
+            >
+              <li class="nav-item mt-sm-3 mt-0 removeMarginForMobileDevice">
+                <span>
+                  <a
+                    *ngIf="!isAuthenticated"
+                    routerLinkActive="navitemj"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    routerLink="/"
+                    class="nav-link py-1 text-dark"
+                  >
+                    <i
+                      class="bi-house fs-1"
+                      matTooltip="Home / Authenticate"
+                      matTooltipPosition="right"
+                    ></i>
+                  </a>
+                </span>
+              </li>
+              <li class="nav-item">
+                <span>
+                  <a
+                    routerLinkActive="navitemj"
+                    routerLink="/categories"
+                    [queryParams]="{
+                      allowEdit:
+                        updatedCurrentProfile?.accessType === 'admin'
+                          ? '1'
+                          : '0'
+                    }"
+                    class="nav-link py-1 text-dark"
+                  >
+                    <i
+                      class="bi-tags fs-1"
+                      matTooltip="Categories"
+                      matTooltipPosition="right"
+                    ></i>
+                  </a>
+                </span>
+              </li>
+              <li class="nav-item">
+                <span>
+                  <a
+                    routerLinkActive="navitemj"
+                    routerLink="/all-products"
+                    [queryParams]="{
+                      allowEdit:
+                        updatedCurrentProfile?.accessType === 'admin'
+                          ? '1'
+                          : '0'
+                    }"
+                    class="nav-link py-1 text-dark"
+                  >
+                    <i
+                      class="bi-grid-3x3-gap fs-1"
+                      matTooltip="All Products"
+                      matTooltipPosition="right"
+                    ></i>
+                  </a>
+                </span>
+              </li>
+              <li class="nav-item">
+                <span>
+                  <a
+                    routerLinkActive="navitemj   "
+                    routerLink="/view-cart"
+                    class="nav-link py-1 position-relative text-dark"
+                  >
+                    <i
+                      class="bi-cart3 fs-1"
+                      matTooltip="View Cart"
+                      matTooltipPosition="right"
+                    ></i
+                    ><span
+                      routerLinkActive="navitemj"
+                      *ngIf="cartCount > 0"
+                      class="
+                        position-absolute
+                        translate-middle-x
+                        badge
+                        rounded-pill
+                        bg-danger
+                      "
+                    >
+                      {{ cartCount }}
+                      <span class="visually-hidden">unread messages</span>
+                    </span>
+                  </a>
+                </span>
+              </li>
+              <li class="nav-item">
+                <span>
+                  <a
+                    routerLinkActive="navitemj"
+                    [routerLink]="['/checkout']"
+                    class="nav-link py-1 text-dark"
+                  >
+                    <i
+                      class="bi-cart-check-fill fs-1"
+                      matTooltip="Checkout"
+                      matTooltipPosition="right"
+                    ></i>
+                    <br />
+                  </a>
+                </span>
+              </li>
+              <br />
+              <div
+                *ngIf="isAuthenticated"
+                class="
+                  dropdown
+                  d-flex
+                  align-items-center
+                  justify-content-center
+                  d-sm-none
+                "
+              >
+                <a
+                  *ngIf="isAuthenticated"
+                  href="#"
+                  class="
+                    p-1
+                    link-dark
+                    text-decoration-none
+                    dropdown-toggle
+                    py-md-3
+                    safariOutline-Fix
+                  "
+                  id="dropdownUser3"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i
+                    *ngIf="!updatedCurrentProfile"
+                    class="bi-person-circle h2"
+                  ></i>
+                  <img
+                    *ngIf="updatedCurrentProfile"
+                    [src]="updatedCurrentProfile?.imagePath"
+                    alt=""
+                    style="
+                      width: 40px;
+                      height: 40px;
+                      border-radius: 50%;
+                      border: solid 2px #6c757d;
+                      padding: 1px;
+                      object-fit: contain;
+                    "
+                  />
+                </a>
+
+                <ul
+                  *ngIf="isAuthenticated"
+                  class="dropdown-menu text-small shadow"
+                  aria-labelledby="dropdownUser3"
+                >
+                  <li>
+                    <a class="dropdown-item" (click)="onLogout()">Sign-out</a>
+                  </li>
+
+                  <li>
+                    <a class="dropdown-item" routerLink="/edit-profile"
+                      >Profile</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" routerLink="/order-history"
+                      >Order History</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="
+                  dropend
+                  d-flex
+                  align-items-center
+                  justify-content-center
+                  d-none d-sm-block
+                "
+              >
+                <a
+                  *ngIf="isAuthenticated"
+                  href="#"
+                  class="
+                    p-1
+                    link-dark
+                    text-decoration-none
+                    dropdown-toggle
+                    py-md-3
+                    safariOutline-Fix
+                  "
+                  id="dropdownUser3"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i
+                    *ngIf="!updatedCurrentProfile"
+                    class="bi-person-circle h2"
+                  ></i>
+                  <img
+                    *ngIf="updatedCurrentProfile"
+                    [src]="updatedCurrentProfile?.imagePath"
+                    alt=""
+                    style="
+                      width: 40px;
+                      height: 40px;
+                      border-radius: 50%;
+                      border: solid 2px #6c757d;
+                      padding: 1px;
+                      object-fit: contain;
+                    "
+                  />
+                </a>
+
+                <ul
+                  *ngIf="isAuthenticated"
+                  class="dropdown-menu text-small shadow"
+                  aria-labelledby="dropdownUser3"
+                >
+                  <li>
+                    <a class="dropdown-item" (click)="onLogout()">Sign-out</a>
+                  </li>
+
+                  <li>
+                    <a class="dropdown-item" routerLink="/edit-profile"
+                      >Profile</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" routerLink="/order-history"
+                      >Order History</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm p-3">
+          <!-- content -->
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-footer id="footer" style="z-index: 2"></app-footer>
+</div>
+
+<!--AUTO LOGOUT MODAL-->
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="autoLogoutModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        Your session has expired.
+        <br />
+        <div class="btn btn-secondary text-center mt-3" data-bs-dismiss="modal">
+          OK
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
